@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Semester GPA Calculator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Semester GPA Calculator</h2>
+
+  <input type="number" id="marksPF" placeholder="Enter marks for PF">
+  <input type="number" id="marksPhysics" placeholder="Enter marks for Physics">
+  <input type="number" id="marksICT" placeholder="Enter marks for ICT">
+  <input type="number" id="marksEnglish" placeholder="Enter marks for English">
+  <input type="number" id="marksIslamic" placeholder="Enter marks for Islamic">
+  <input type="number" id="marksIdeology" placeholder="Enter marks for Ideology">
+
+  <button onclick="calculateGPA()">Calculate GPA</button>
+  <div id="result">Your GPA will appear here</div>
+</div>
+
+<script>
+  const credits = [4, 3, 3, 3, 2, 2];
+
+  function getGPA(marks) {
+    if (marks >= 80) return 4.0;
+    else if (marks >= 75) return 3.5;
+    else if (marks >= 70) return 3.0;
+    else if (marks >= 65) return 2.5;
+    else if (marks >= 60) return 2.0;
+    else if (marks >= 55) return 1.5;
+    else if (marks >= 50) return 1.0;
+    else return 0.0;
+  }
+
+  function calculateGPA() {
+    const ids = ["marksPF", "marksPhysics", "marksICT", "marksEnglish", "marksIslamic", "marksIdeology"];
+    let totalGPA = 0;
+    let valid = true;
+
+    for (let i = 0; i < ids.length; i++) {
+      const val = document.getElementById(ids[i]).value;
+      const marks = parseInt(val);
+      if (isNaN(marks)) {
+        valid = false;
+        break;
+      }
+      const gpa = getGPA(marks);
+      totalGPA += gpa * credits[i];
+    }
+
+    const result = document.getElementById("result");
+    if (!valid) {
+      result.innerText = "Please enter all marks correctly.";
+      result.style.color = "red";
+    } else {
+      const finalGPA = totalGPA / 17;
+      result.innerText = `🎓 Your Semester GPA is: ${finalGPA.toFixed(2)}`;
+      result.style.color = "green";
+    }
+  }
+</script>
+
+</body>
+</html>
